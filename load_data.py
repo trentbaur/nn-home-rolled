@@ -2,7 +2,7 @@ import numpy as np
 import h5py
 
 
-def load_data(type = 'train',
+def import_data(type = 'train',
               file = 'catvnoncat'):
     
     dataset = h5py.File(name = 'datasets/' + type + '_' + file + '.h5', mode = 'r')
@@ -17,9 +17,20 @@ def load_data(type = 'train',
 
 def load_dataset():
     
-    train_X, train_y, classes = load_data(type = 'train', file = 'catvnoncat')
-    test_X, test_y, _ = load_data(type = 'test', file = 'catvnoncat')
+    train_X, train_y, classes = import_data(type = 'train', file = 'catvnoncat')
+    test_X, test_y, _ = import_data(type = 'test', file = 'catvnoncat')
     
     return train_X, train_y, test_X, test_y, classes
 
 #   load_dataset()
+
+
+
+#----------------------
+#   Display Picture
+#----------------------
+#   import matplotlib.pyplot as plt
+
+#   index = 1
+#   plt.imshow(train_x_orig[index])
+#   print ("y = " + str(train_y[0,index]) + ". It's a " + classes[train_y[0,index]].decode("utf-8") +  " picture.")

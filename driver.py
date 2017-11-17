@@ -1,32 +1,18 @@
 import numpy as np
-import setup
+import load_data as dt
+import actions
 
-def model_forward(X, parameters):
-    
-    #   Implement forward propagation for LINEAR -> RELU * (L-1) -> LINEAR->SIGMOID
-    caches = []
-    
-    A = X
-    
-    layers = len(parameters) // 2
-    
-    for layer in range(1, layers):
-        A_prev = A
-        
-        A, cache = linear_activation_forward(A_prev,
-                                             parameters['W' + str(layer)],
-                                             parameters['b' + str(layer)])
-        
-        caches.append(cache)
-        
-    #   Execute final forward propagation which will end with Sigmoid function
-    A, cache = linear_activation_forward(A,
-                                         parameters['W' + str(layers)],
-                                         parameters['b' + str(layers)],
-                                         func = act.sigmoid)
-    
-    caches.append(cache)
-    
-    return A, caches
+np.random.seed(1)
 
-    
+layers_dims = [12288, 20, 5, 1]
+
+
+train_x_orig, train_y, test_x_orig, test_y, classes = dt.load_dataset()
+
+#   Reshape the training and test examples
+train_X = train_x_orig.reshape(train_x_orig.shape[0], -1).T / 255
+test_X = test_x_orig.reshape(test_x_orig.shape[0], -1).T / 255
+
+
+params = actions.run_model(train_X, train_y, layers_dims, num_iterations = 2000, print_cost = True)
+
